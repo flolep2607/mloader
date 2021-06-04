@@ -10,6 +10,9 @@ from requests import Session
 from mloader.exporter import ExporterBase, CBZExporter
 from mloader.response_pb2 import Response, MangaViewer, TitleDetailView
 
+import re
+regex_all_mangas=re.compile(r"https://mangaplus\.shueisha\.co\.jp/drm/title/([0-9]+)",re.MULTILINE)
+
 log = logging.getLogger()
 
 MangaList = Dict[int, Set[int]]
@@ -106,7 +109,7 @@ class MangaLoader:
 
         return mangas
 
-    def _download(self, manga_list: MangaList, dst: str, begin: int, end : int):
+    def _download(self, manga_list: MangaList, dst: str, begin: int, end : int:
         manga_num = len(manga_list)
         for title_index, (title_id, chapters) in enumerate(
             manga_list.items(), 1
@@ -154,7 +157,9 @@ class MangaLoader:
                         exporter.add_image(image_blob, page_index)
 
                 exporter.close()
-
+    def get_list_mangas():
+        resp=self.session.get(f"{self._api_url}/api/title_list/all")
+        return set([int(i) for i in regex_all_mangas.findall(resp)])
     def download(
         self,
         *,
@@ -163,5 +168,9 @@ class MangaLoader:
         dst: str = ".",
         begin: int = None,
         end: int = None,
+        all:bool
     ):
-        self._download(self._normalize_ids(title_ids, chapter_ids), dst, begin, end)
+        if all:
+            self._download(self._normalize_ids(get_list_mangas(), None), dst, None, None)
+        else:
+            self._download(self._normalize_ids(title_ids, chapter_ids), dst, begin, end)
