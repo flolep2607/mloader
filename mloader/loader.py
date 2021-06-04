@@ -157,7 +157,7 @@ class MangaLoader:
                         exporter.add_image(image_blob, page_index)
 
                 exporter.close()
-    def get_list_mangas():
+    def get_list_mangas(self):
         resp=self.session.get(f"{self._api_url}/api/title_list/all")
         return set([int(i) for i in regex_all_mangas.findall(resp)])
     def download(
