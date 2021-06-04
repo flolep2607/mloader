@@ -171,6 +171,6 @@ class MangaLoader:
         all:bool
     ):
         if all:
-            self._download(self._normalize_ids(get_list_mangas(), None), dst, None, None)
+            self._download(self._normalize_ids(self.get_list_mangas(), None), dst, None, None)
         else:
             self._download(self._normalize_ids(title_ids, chapter_ids), dst, begin, end)
