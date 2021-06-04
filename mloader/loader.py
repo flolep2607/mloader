@@ -109,7 +109,7 @@ class MangaLoader:
 
         return mangas
 
-    def _download(self, manga_list: MangaList, dst: str, begin: int, end : int:
+    def _download(self, manga_list: MangaList, dst: str, begin: int, end : int):
         manga_num = len(manga_list)
         for title_index, (title_id, chapters) in enumerate(
             manga_list.items(), 1
