@@ -157,6 +157,15 @@ Examples:
     type=click.INT,
     help="Minimal chapter to try to download (only works with single id).",
 )
+@click.option(
+    "--all",
+    "-a",
+    is_flag=True,
+    default=False,
+    show_default=True,
+    help="Download All mangas",
+    envvar="MLOADER_ALL",
+)
 @click.argument("urls", nargs=-1, callback=validate_urls, expose_value=False)
 @click.pass_context
 def main(
@@ -169,16 +178,16 @@ def main(
     titles: Optional[Set[int]] = None,
     begin: int = None,
     end: int = None,
+    all: bool,
 ):
     click.echo(click.style(about.__doc__, fg="blue"))
     if not any((chapters, titles)):
         click.echo(ctx.get_help())
         return
     log.info("Started export")
-
     loader = MangaLoader(RawExporter if raw else CBZExporter, quality, split)
     try:
-        loader.download(title_ids=titles, chapter_ids=chapters, dst=out_dir, begin=begin, end=end)
+        loader.download(title_ids=titles, chapter_ids=chapters, dst=out_dir, begin=begin, end=end,all=all)
     except Exception:
         log.exception("Failed to download manga")
     log.info("SUCCESS")
