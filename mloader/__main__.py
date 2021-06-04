@@ -182,7 +182,7 @@ def main(
     end: int = None
 ):
     click.echo(click.style(about.__doc__, fg="blue"))
-    if not any((chapters, titles)):
+    if not any((chapters, titles)) and not all:
         click.echo(ctx.get_help())
         return
     log.info("Started export")
