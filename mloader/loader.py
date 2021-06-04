@@ -159,7 +159,7 @@ class MangaLoader:
                 exporter.close()
     def get_list_mangas(self):
         resp=self.session.get(f"{self._api_url}/api/title_list/all")
-        return set([int(i) for i in regex_all_mangas.findall(resp)])
+        return set([int(i) for i in regex_all_mangas.findall(resp.text)])
     def download(
         self,
         *,
