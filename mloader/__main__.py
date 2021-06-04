@@ -110,6 +110,15 @@ Examples:
     envvar="MLOADER_RAW",
 )
 @click.option(
+    "--all",
+    "-a",
+    is_flag=True,
+    default=False,
+    show_default=True,
+    help="Download All mangas",
+    envvar="MLOADER_ALL",
+)
+@click.option(
     "--quality",
     "-q",
     default="super_high",
@@ -157,28 +166,20 @@ Examples:
     type=click.INT,
     help="Minimal chapter to try to download (only works with single id).",
 )
-@click.option(
-    "--all",
-    "-a",
-    is_flag=True,
-    default=False,
-    show_default=True,
-    help="Download All mangas",
-    envvar="MLOADER_ALL",
-)
+
 @click.argument("urls", nargs=-1, callback=validate_urls, expose_value=False)
 @click.pass_context
 def main(
     ctx: click.Context,
     out_dir: str,
     raw: bool,
+    all: bool,
     quality: str,
     split: bool,
     chapters: Optional[Set[int]] = None,
     titles: Optional[Set[int]] = None,
     begin: int = None,
-    end: int = None,
-    all: bool
+    end: int = None
 ):
     click.echo(click.style(about.__doc__, fg="blue"))
     if not any((chapters, titles)):
