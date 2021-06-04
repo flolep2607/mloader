@@ -178,7 +178,7 @@ def main(
     titles: Optional[Set[int]] = None,
     begin: int = None,
     end: int = None,
-    all: bool,
+    all: bool
 ):
     click.echo(click.style(about.__doc__, fg="blue"))
     if not any((chapters, titles)):
